@@ -1,1 +1,1 @@
-export { add } from './add';
+export { standardResolver } from './standard-resolver';
