@@ -12,7 +12,7 @@ const ERRORS = {
 
   mandatoryHashMessage: 'There must be a # in the hashtag',
   notEmptyMessage: 'Hashtag should not be empty',
-};
+} as const;
 
 describe.each([
   {
