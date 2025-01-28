@@ -1,5 +1,6 @@
 import { standardResolver } from './standard-resolver';
 import { useForm } from '@mantine/form';
+import type { StandardSchemaV1 } from '@standard-schema/spec';
 import { act, renderHook } from '@testing-library/react';
 import * as v from 'valibot';
 import { z } from 'zod';
@@ -14,7 +15,15 @@ const ERRORS = {
   notEmptyMessage: 'Hashtag should not be empty',
 } as const;
 
-describe.each([
+type Validation = {
+  library: string;
+  basicSchema: StandardSchemaV1;
+  nestedSchema: StandardSchemaV1;
+  listSchema: StandardSchemaV1;
+  multiMessageSchema: StandardSchemaV1;
+};
+
+const validations = [
   {
     library: 'Zod',
     basicSchema: z.object({
@@ -68,7 +77,9 @@ describe.each([
       ),
     }),
   },
-])('Tests Schema - $library', ({ basicSchema, nestedSchema, listSchema, multiMessageSchema }) => {
+] satisfies Validation[];
+
+describe.each(validations)('Tests Schema - $library', (validation) => {
   it('validates basic fields with given schema', () => {
     const hook = renderHook(() =>
       useForm({
@@ -77,7 +88,7 @@ describe.each([
           email: '',
           age: 16,
         },
-        validate: standardResolver(basicSchema),
+        validate: standardResolver(validation.basicSchema),
       })
     );
 
@@ -106,7 +117,7 @@ describe.each([
             field: '',
           },
         },
-        validate: standardResolver(nestedSchema),
+        validate: standardResolver(validation.nestedSchema),
       })
     );
 
@@ -129,7 +140,7 @@ describe.each([
         initialValues: {
           list: [{ name: '' }],
         },
-        validate: standardResolver(listSchema),
+        validate: standardResolver(validation.listSchema),
       })
     );
 
@@ -158,7 +169,7 @@ describe.each([
           initialValues: {
             hashtag: '',
           },
-          validate: standardResolver(multiMessageSchema, options),
+          validate: standardResolver(validation.multiMessageSchema, options),
         })
       );
 
