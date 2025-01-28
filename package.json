@@ -2,7 +2,7 @@
   "name": "mantine-form-standard-resolver",
   "description": "Standard Schema resolver for @mantine/form validation",
   "packageManager": "yarn@4.6.0",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "type": "module",
   "author": "Obi Fortune <gabrielobi.of@gmail.com>",
   "engines": {
