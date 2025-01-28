@@ -47,7 +47,8 @@
     "prettier:write": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",
     "lint": "eslint --cache .",
-    "test:run": "vitest",
+    "test:run": "vitest run",
+    "test:watch": "vitest",
     "test": "npm run prettier:check && npm run typecheck && npm run lint && npm run test:run && npm run build && npm run pack:test",
     "release": "npm test && tsx scripts/release"
   },
