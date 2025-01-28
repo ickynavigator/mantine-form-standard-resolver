@@ -2,6 +2,7 @@ import { standardResolver } from './standard-resolver';
 import { useForm } from '@mantine/form';
 import type { StandardSchemaV1 } from '@standard-schema/spec';
 import { act, renderHook } from '@testing-library/react';
+import { type } from 'arktype';
 import * as v from 'valibot';
 import { z } from 'zod';
 
@@ -75,6 +76,51 @@ const validations = [
         v.minLength(1, ERRORS.notEmptyMessage),
         v.includes('#', ERRORS.mandatoryHashMessage)
       ),
+    }),
+  },
+  {
+    library: 'Arktype',
+    basicSchema: type({
+      name: type('string >= 2').configure({ message: () => ERRORS.name }),
+      email: type('string.email').configure({ message: () => ERRORS.email }),
+      age: type('number >= 18').configure({ message: () => ERRORS.age }),
+    }),
+    nestedSchema: type({
+      nested: {
+        field: type('string >= 2').configure({ message: () => ERRORS['nested.field'] }),
+      },
+    }),
+    listSchema: type({
+      list: type({
+        name: type('string >= 2').configure({ message: () => ERRORS.name }),
+      }).array(),
+    }),
+    multiMessageSchema: type({
+      // TODO: update pipe setup for arktype multiple messages validation
+      hashtag: type('string')
+        .narrow((value, ctx) => {
+          if (value.length <= 0) {
+            ctx.errors.add(
+              ctx.error({
+                description: ERRORS.notEmptyMessage,
+                message: ERRORS.notEmptyMessage,
+                predicate: { name: 'length' },
+              })
+            );
+          }
+
+          if (!value.includes('#')) {
+            ctx.errors.add(
+              ctx.error({
+                description: ERRORS.mandatoryHashMessage,
+                message: ERRORS.mandatoryHashMessage,
+                predicate: { name: 'include' },
+              })
+            );
+          }
+
+          return ctx.hasError();
+        })
     }),
   },
 ] satisfies Validation[];

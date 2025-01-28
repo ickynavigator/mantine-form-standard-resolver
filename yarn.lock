@@ -19,6 +19,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ark/schema@npm:0.38.0":
+  version: 0.38.0
+  resolution: "@ark/schema@npm:0.38.0"
+  dependencies:
+    "@ark/util": "npm:0.38.0"
+  checksum: 10c0/1d7e6d23e5fd6a7abe51c9ec69bd76cafe685ca409e10a4b58c0ecab457ab80b28a28cf7d965ec8256d613e4f507cbd6f9bda94b078a2dc27a81a28cdc76dac3
+  languageName: node
+  linkType: hard
+
+"@ark/util@npm:0.38.0":
+  version: 0.38.0
+  resolution: "@ark/util@npm:0.38.0"
+  checksum: 10c0/ee3ff6f1408cfd80670b88f6c8c3194bc59cf34fbf3192a706e974168f4281d221d322e89b1eb65a559caf53ef0d9cdfe37fbd89f6af6dd897223114ec634899
+  languageName: node
+  linkType: hard
+
 "@asamuzakjp/css-color@npm:^2.8.2":
   version: 2.8.3
   resolution: "@asamuzakjp/css-color@npm:2.8.3"
@@ -1148,6 +1164,7 @@ __metadata:
     "@types/react-dom": "npm:^19"
     "@types/signale": "npm:^1"
     "@types/yargs": "npm:^17.0.33"
+    arktype: "npm:^2.0.3"
     esbuild: "npm:^0.24.2"
     eslint: "npm:^9.18.0"
     execa: "npm:^9.5.2"
@@ -1747,6 +1764,16 @@ __metadata:
   version: 5.3.2
   resolution: "aria-query@npm:5.3.2"
   checksum: 10c0/003c7e3e2cff5540bf7a7893775fc614de82b0c5dde8ae823d47b7a28a9d4da1f7ed85f340bdb93d5649caa927755f0e31ecc7ab63edfdfc00c8ef07e505e03e
+  languageName: node
+  linkType: hard
+
+"arktype@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "arktype@npm:2.0.3"
+  dependencies:
+    "@ark/schema": "npm:0.38.0"
+    "@ark/util": "npm:0.38.0"
+  checksum: 10c0/9fc0f2c4f6acce4d992d4c65a6ad37caff2588b0afaf10c87d9b7d8b40e8948888b99099fc002de0e9408a5bc0ee6ba7da169fec6a5245d254ab663496b8c177
   languageName: node
   linkType: hard
 
