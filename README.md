@@ -1,66 +1,111 @@
-# ts-package-template
+# mantine-form-standard-resolver
 
-A template to publish a TypeScript package to npm.
+[![npm version](https://badgen.net/npm/v/mantine-form-standard-resolver)](https://npm.im/mantine-form-standard-resolver)
 
-Included tools:
+Uses the [Standard Schema Interface](https://standardschema.dev/) to validate form fields with any validation library that supports it.
 
-- Yarn v4
-- Rollup
-- esbuild
-- jest
-- prettier
-- ESLint
-- GitHub workflow for tests
+## Installation
 
-## Usage
+With yarn:
 
-- Click "Use this template" button to create a new repository from this template
-- Clone the new repository
-- Change `package.json` to your own package name, description, etc. **!important**: change `repository.url` and other repository links to your own repository url
-- Install dependencies: `yarn` (other package managers are not supported)
-- Write your code in `src/` directory
-- Run `npm run release` to build and publish your package to npm
-
-## Publishing to npm
-
-Use `release` script to publish the package:
-
-- `npm run release` – release a new patch version to npm
-- `npm run release minor` – release a new minor version to npm
-- `npm run release major` – release a new major version to npm
-- `npm run release minor -- --stage alpha` – release a new minor alpha version to npm (for example, `1.1.0-alpha.0`)
-
-Note that release script will always publish public packages to npm. If you want to publish a private package, change release script in `scripts/release.ts`.
-
-## Publishing with GitHub Actions
-
-1. Create [npm authentication token](https://docs.npmjs.com/creating-and-viewing-authentication-tokens) and add it as `NPM_TOKEN` to your repository secrets (Settings -> Secrets and variables -> Actions -> New repository secret).
-
-2. Create `.github/workflows/publish.yml` with the following content. _Note that if your default branch is main, you should change it in the publish action_.
-
-```yaml
-on:
-  push:
-    branches: master
-
-jobs:
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: '**/yarn.lock'
-      - run: yarn
-      - run: npm test
-      - uses: JS-DevTools/npm-publish@v3
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
+```sh
+yarn add mantine-form-standard-resolver
 ```
 
-3. To create a new release, use commands from the previous section but with `--no-publish` flag, for example: `npm run release minor -- --no-publish`.
+With npm:
+
+```sh
+npm install mantine-form-standard-resolver
+```
+
+## Basic fields validation
+
+```tsx
+import { useForm } from '@mantine/form';
+import { standardResolver } from 'mantine-form-standard-resolver';
+import { z } from 'zod';
+
+const schema = z.object({
+  name: z.string().min(2, { message: 'Name should have at least 2 letters' }),
+  email: z.string().email({ message: 'Invalid email' }),
+  age: z.number().min(18, { message: 'You must be at least 18 to create an account' }),
+});
+
+const form = useForm({
+  initialValues: {
+    name: '',
+    email: '',
+    age: 16,
+  },
+  validate: standardResolver(schema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  name: 'Name should have at least 2 letters',
+//  email: 'Invalid email',
+//  age: 'You must be at least 18 to create an account'
+// }
+```
+
+## Nested fields validation
+
+```tsx
+import { useForm } from '@mantine/form';
+import { standardResolver } from 'mantine-form-standard-resolver';
+import { z } from 'zod';
+
+const nestedSchema = z.object({
+  nested: z.object({
+    field: z.string().min(2, { message: 'Field should have at least 2 letters' }),
+  }),
+});
+
+const form = useForm({
+  initialValues: {
+    nested: {
+      field: '',
+    },
+  },
+  validate: standardResolver(nestedSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'nested.field': 'Field should have at least 2 letters',
+// }
+```
+
+## List fields validation
+
+```tsx
+import { useForm } from '@mantine/form';
+import { standardResolver } from 'mantine-form-standard-resolver';
+import { z } from 'zod';
+
+const listSchema = z.object({
+  list: z.array(
+    z.object({
+      name: z.string().min(2, { message: 'Name should have at least 2 letters' }),
+    })
+  ),
+});
+
+const form = useForm({
+  initialValues: {
+    list: [{ name: '' }],
+  },
+  validate: standardResolver(listSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'list.0.name': 'Name should have at least 2 letters',
+// }
+```
 
 ## License
 

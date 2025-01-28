@@ -1,26 +1,28 @@
 {
-  "name": "@rtivital/ts-package-template",
-  "description": "A template for TypeScript packages",
+  "name": "mantine-form-standard-resolver",
+  "description": "Standard Schema resolver for @mantine/form validation",
   "packageManager": "yarn@4.6.0",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "type": "module",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "author": "Obi Fortune <gabrielobi.of@gmail.com>",
   "engines": {
     "node": ">=16.6.0"
   },
   "keywords": [
-    "typescript",
-    "template"
+    "standard-schema",
+    "mantine",
+    "form",
+    "resolver"
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rtivital/ts-package-template.git"
+    "url": "git+https://github.com/ickynavigator/mantine-form-standard-resolver.git"
   },
   "bugs": {
-    "url": "https://github.com/rtivital/ts-package-template/issues"
+    "url": "https://github.com/ickynavigator/mantine-form-standard-resolver/issues"
   },
-  "homepage": "https://github.com/rtivital/ts-package-template#readme",
+  "homepage": "https://github.com/ickynavigator/mantine-form-standard-resolver#readme",
   "main": "./dist/cjs/index.cjs",
   "types": "./dist/types/index.d.cts",
   "module": "./dist/esm/index.mjs",
