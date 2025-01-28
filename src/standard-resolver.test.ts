@@ -97,30 +97,29 @@ const validations = [
     }),
     multiMessageSchema: type({
       // TODO: update pipe setup for arktype multiple messages validation
-      hashtag: type('string')
-        .narrow((value, ctx) => {
-          if (value.length <= 0) {
-            ctx.errors.add(
-              ctx.error({
-                description: ERRORS.notEmptyMessage,
-                message: ERRORS.notEmptyMessage,
-                predicate: { name: 'length' },
-              })
-            );
-          }
+      hashtag: type('string').narrow((value, ctx) => {
+        if (value.length <= 0) {
+          ctx.errors.add(
+            ctx.error({
+              description: ERRORS.notEmptyMessage,
+              message: ERRORS.notEmptyMessage,
+              predicate: { name: 'length' },
+            })
+          );
+        }
 
-          if (!value.includes('#')) {
-            ctx.errors.add(
-              ctx.error({
-                description: ERRORS.mandatoryHashMessage,
-                message: ERRORS.mandatoryHashMessage,
-                predicate: { name: 'include' },
-              })
-            );
-          }
+        if (!value.includes('#')) {
+          ctx.errors.add(
+            ctx.error({
+              description: ERRORS.mandatoryHashMessage,
+              message: ERRORS.mandatoryHashMessage,
+              predicate: { name: 'include' },
+            })
+          );
+        }
 
-          return ctx.hasError();
-        })
+        return ctx.hasError();
+      }),
     }),
   },
 ] satisfies Validation[];
