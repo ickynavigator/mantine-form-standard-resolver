@@ -17,6 +17,7 @@ jest.config.cjs
 yarn.lock
 .github/*
 .nvmrc
+.node-version
 .DS_Store
 CONTRIBUTING.md
 vitest.config.ts
