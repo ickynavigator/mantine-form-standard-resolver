@@ -202,7 +202,7 @@ describe.each(validations)('Tests Schema - $library', (validation) => {
     expect(hook.result.current.errors).toStrictEqual({});
   });
 
-  it.skip.each([
+  it.skipIf(validation.library === "Arktype").each([
     [{ errorPriority: 'first' as const }, ERRORS.notEmptyMessage],
     [{ errorPriority: 'last' as const }, ERRORS.mandatoryHashMessage],
     [undefined, ERRORS.mandatoryHashMessage],
